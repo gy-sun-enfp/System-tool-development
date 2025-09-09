@@ -1,0 +1,215 @@
+\documentclass[12pt,a4paper,UTF8]{ctexart} 
+\CTEXsetup[format={\bfseries\large}]{section}
+\setlength{\parindent}{2em}
+\usepackage[backend=biber,style=gb7714-2015]{biblatex}
+\addbibresource{references.bib}
+\usepackage{amsmath,amssymb}  % 数学公式
+\usepackage{graphicx} % 插图
+\usepackage{xcolor} 
+\usepackage{hyperref}         % 超链接
+\usepackage{geometry}         % 页面设置
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+%页眉页脚
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{Report 1}
+\fancyfoot[C]{第 \thepage 页}
+\begin{document}
+
+\begin{titlepage}
+\centering
+\vspace*{3cm}
+{\Huge\bfseries 第一次实验报告 \par}
+\vspace{2cm}
+{\Large 宫怡 \par}
+{\Large 学号：24020007033 \par}
+\vfill
+{\large 2025.9.6}
+\end{titlepage}
+
+
+\tableofcontents%插入目录
+
+
+\newpage
+\noindent{\heiti\zihao{4}实验内容:}
+{\heiti\zihao{5}1.版本控制（Git）
+2.Latex 文档编辑}
+
+\noindent\section{（Git）版本控制}
+\subsection{克隆课程网站的仓库}
+
+使用git clone + 仓库网址的方式完整克隆课程网站仓库。
+
+“git clone"指令：从远端下载仓库
+
+\includegraphics[scale=0.3]{test0.png}
+\subsection{将版本历史可视化并进行探索}
+通过``git log --oneline --graph --decorate --all"进行查看所有的修改记录：每个提交只显示一行（commit id+提交信息），在左边显示ASCII图形，画出分支/合并的树状结构，并在提交旁边显示分支名、标签等信息，显示所有分支的提交历史。
+
+\includegraphics[scale=0.2]{test6.png}
+
+\includegraphics[scale=0.2]{test7.png}
+
+\subsection{查看README.md文件修改}
+
+``git log --README.md"显示所有的README.md修改日志。显示内容包括作者，日期和详细的修改内容，便于对文档修改进行追溯。
+
+``git log"指令：显示历史日志。
+``git log --all --graph --decorate"指令：可视化历史记录（有向无环图）
+
+
+\includegraphics[scale=0.2]{test1.png}
+
+\includegraphics[scale=0.2]{test2.png}
+
+\includegraphics[scale=0.2]{test3.png}
+
+由于文档要求查看最后提交修改的作者，所以可以使用``git log -n 1 --README.md"来进行查看，``-n”指最多显示多少条提交记录。
+
+练习结果：最后修改README.md文件的作者是Zhenger233，在2024.11.15修改为中文README。
+
+\subsection{查看\_config.yml文件固定的修改内容}
+
+实例要求：查看最后一次修改\_config.yml文件中collections:行时的提交信息是什么。
+
+1.查看``collections:"具体在哪一行，使用``git grep -n ``collections:" -- \_config.yml ",``git grep"用于搜索字符串``collections:", ``-n"显示搜索内容的行数。
+
+2.显示文件中改行最后一次修改的提交信息
+（改动者，改动时间，commit哈希）``git blame -L 18,18 -- \_config.yml”。``-L 18，18"指定只查看第18行。
+
+3.查看具体的提交信息。``git show a88b4eac" 根据前两步找到的commit哈希值，查看具体的提交信息：作者将课程资料从普通文件夹重构成Jekyll collections的格式。
+
+\includegraphics[scale=0.3]{test4.png}
+
+\includegraphics[scale=0.3]{test5.png}
+\subsection{添加文件}
+通过``git add secret.txt"添加secret.txt文件。
+
+``git commit -m ``Add secret file by mistake"添加提交信息``Add secret file by mistake"
+
+\includegraphics[scale=0.4]{test9.png}
+\subsection{删除文件}
+通过下载安装git-filter-repo工具，对secret.txt文件进行删除，随后检查日志，发现没有相关文件日志。
+
+\includegraphics[scale=0.3]{test8.png}
+
+\includegraphics[scale=0.2]{test10.png}
+
+\subsection{git stash的使用}
+修改仓库内新建的sensitive\_file.txt文件，通过git status对修改进行检查，展示修改成功。
+
+运行git stash，再次查看git status，发现被清空，原来改后的文件修复原状。
+
+再次运行git stash pop，修改内容再次返回，stash被移除。
+
+\includegraphics[scale=0.4]{test12.jpg}
+
+\includegraphics[scale=0.4]{test13.jpg}
+\subsection{创建别名}
+\includegraphics[scale=0.3]{test16.png}
+
+通过命令行打开下面文件
+
+\includegraphics[scale=0.3]{test15.png}
+
+在这个文件中自动添加[alias] graph=log --all --graph --decorate --oneline。再次打开就可以使用别名。
+
+\includegraphics[scale=0.3]{test14.png}
+\subsection{设置全局忽略文件的位置}
+用命令行在.gitconfig里面加入配置，创建.gitignore\_global文件，在文件里写入常见的全局忽略规则，验证配置，显示配置成功。
+
+\includegraphics[scale=0.3]{test21.png}
+
+\includegraphics[scale=0.3]{test20.png}
+
+\includegraphics[scale=0.3]{test22.png}
+
+\section{LaTex文档编辑}
+\subsection{符号的表示方式}
+前一个双引号由两个反引号组成，如果使用键盘上的双引号会出现两个引号全部为下引号。下划线前应该使用反斜杠，否则会变成-。换行时，需要两个换行符。
+
+\includegraphics[scale=0.4]{test11.png}
+\subsection{插入图片}
+通过引入graphicx包，使用includegraphics命令引入图片，scale调整缩放大小，也可以使用caption{}给图片添加标题（会显示在图片下方）和label{fig:example}给这张图设置一个引用标签
+
+\includegraphics[scale=0.5]{test17.png}
+
+\subsection{插入数学公式}
+\includegraphics[scale=0.5]{test23.png}
+
+行内公式$E = mc^2$ 
+
+插入独立公式
+
+\[ \int_a^b f(x)\, dx \]  
+
+\subsection{标题格式}
+section为主标题，subsetction为二级标题，subsubsection为三级标题，paragraph为四级标题，subparagraph为五级标题
+\subsection{字体格式}
+
+\includegraphics[scale=1.2]{test24.jpg}
+
+通过noindent取消缩进，textbf调整字体为粗体，zihao{}调整字体大小，textit调整字体为斜体，underline调整下划线，texttt调整为等宽字体，调整颜色导入xcolor包，全局改变字体导入字体包。
+\subsection{文档体裁}
+通过documentclass{}调整文档体裁，article为文章，report为报告，beamer为幻灯片
+
+本篇报告采用ctexart格式，即article（文章类）的中文增强版。
+\subsection{页眉页脚}
+
+\includegraphics[scale=1.2]{test25.jpg}
+
+导言部分引入fancyhdr包，fancyhf清除已有格式，fancyhead编辑页眉，[]表示具体位置，L,C,R分别表示左、中、右，leftmark表示显示当前所在的一级标题。
+\subsection{目录}
+通过tableofcontents自动创建文章目录。
+\subsection{封面}
+\includegraphics[scale=0.7]{test26.jpg}
+
+begin\{titlepage\}开始一个独立的封面环境,cnetering整个页面的内容居中对齐，vspace留出空白，vfill占据剩余的数值空间，把下面的内容推到页面底部。
+\subsection{插入图表}
+\begin{table}[htbp]
+    \centering
+    \caption{学生成绩表}
+    \label{tab:score}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        姓名 & 数学 & 英语\\
+        \hline
+        张三 & 92 & 88\\
+        李四 & 88 & 91 \\
+        \hline
+    \end{tabular}
+\end{table}
+\includegraphics[scale=0.7]{test27.jpg}
+
+hline分割内容，|c|c|c|固定格式
+\subsection{参考文献}
+
+LaTex最早由Lamport推出\cite{lamport1994}。
+更多扩展请参考\cite{mittelbach2004}。
+
+
+\printbibliography
+
+\newpage
+
+\section{补充}
+\subsection{心得体会}
+LaTex提供了强大的文档排版能力，尤其适合数学公式、表格和参考文献等的统一管理。在使用过程中，我体会到了LaTex的优势在于：
+1.结构化排版，通过命令行可以清晰划分文档层次
+
+2.公式和图表美观，数学公式可以通过宏包进行专业排版，图表可以自动编号和生成目录。
+但是LaTex也有一定的学习曲线，在使用过程中遇到一些编译问题和命令、宏包不熟悉导致的错误，通过查阅资料和实验，逐步掌握了正确的使用方法。
+
+Git的使用极大的方便了版本管理，在本次实验中，我学会了：
+1.版本追踪，回溯和比较不同的版本
+2.分支管理，通过创建分支，可以独立修改操作，而不影响主版本
+
+在通过命令行进行Git的实验时，参数差别会导致不同的结果，也会有对命令行不熟悉导致的错误，通过实验和了解Git，逐步掌握了Git的使用。
+
+\subsection{GitHub仓库地址}
+https://github.com/gy-sun-enfp/System-tool-development
+
+\end{document}
